@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Googlebot & Bingbot specific directives
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Host & Sitemap
+Host: https://mergevideo.github.io
+Sitemap: https://mergevideo.github.io/sitemap.xml

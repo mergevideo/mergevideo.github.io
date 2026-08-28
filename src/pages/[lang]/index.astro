@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FeaturesSection from '../../components/FeaturesSection.astro';
+import HowItWorksSection from '../../components/HowItWorksSection.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import VideoMergerWorkspace from '../../components/VideoMergerWorkspace.jsx';
+import { languages, ui, defaultLang, type SupportedLanguage } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return (Object.keys(languages) as SupportedLanguage[])
+    .filter((lang) => lang !== defaultLang)
+    .map((lang) => ({
+      params: { lang },
+    }));
+}
+
+const { lang } = Astro.params as { lang: SupportedLanguage };
+const t = useTranslations(lang);
+const translations = ui[lang] || ui[defaultLang];
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="pt-12 pb-8 sm:pt-20 sm:pb-12 px-4 sm:px-6 relative overflow-hidden">
+      <!-- Background Ambient Glow with 3368A0 & C8DFDB -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-tr from-[#3368A0]/15 via-[#66A3BF]/15 to-[#C8DFDB]/25 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- Security & Privacy Pill -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 dark:bg-[#131f2d]/80 border border-[#C8DFDB] dark:border-[#20364d] text-xs font-semibold text-[#3368A0] dark:text-[#66A3BF] mb-6 shadow-sm animate-pulse-subtle">
+          <svg class="w-4 h-4 text-[#3368A0] dark:text-[#66A3BF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>{t('hero.badge')}</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-[#192a3e] dark:text-[#F2EFE7] tracking-tight leading-[1.15] mb-6">
+          {t('hero.title')}{' '}
+          <span class="bg-gradient-to-r from-[#3368A0] via-[#66A3BF] to-[#3368A0] dark:from-[#66A3BF] dark:via-[#C8DFDB] dark:to-[#66A3BF] bg-clip-text text-transparent">
+            {t('hero.titleHighlight')}
+          </span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-base sm:text-lg text-[#4a5d72] dark:text-[#adc5d8] max-w-2xl mx-auto leading-relaxed mb-10">
+          {t('hero.subtitle')}
+        </p>
+
+        <!-- Interactive React Island Workspace -->
+        <VideoMergerWorkspace
+          client:load
+          translations={translations}
+          lang={lang}
+        />
+      </div>
+    </section>
+
+    <!-- Marketing & SEO Content Sections -->
+    <FeaturesSection lang={lang} />
+    <HowItWorksSection lang={lang} />
+    <FaqSection lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+</Layout>

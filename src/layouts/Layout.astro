@@ -1,0 +1,277 @@
+---
+import { defaultLang, languages, type SupportedLanguage } from '../i18n/ui';
+import { useTranslations, getHreflangList, getLocalizedPath } from '../i18n/utils';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: SupportedLanguage;
+}
+
+const { lang = defaultLang, title, description } = Astro.props;
+const t = useTranslations(lang);
+
+const siteUrl = 'https://mergevideo.github.io';
+const ogImageUrl = 'https://res.cloudinary.com/dpx6w78bt/image/upload/f_auto/q_auto/v1786342039/Online_Tool_rc1ybr.png';
+const pageTitle = title || t('meta.title');
+const pageDescription = description || t('meta.description');
+const currentPath = Astro.url.pathname;
+const canonicalUrl = `${siteUrl}${getLocalizedPath(currentPath, lang)}`;
+const hreflangLinks = getHreflangList(siteUrl, currentPath);
+
+// Locale mappings for OpenGraph
+const localeMap: Record<SupportedLanguage, string> = {
+  en: 'en_US',
+  es: 'es_ES',
+  pt: 'pt_BR',
+  de: 'de_DE',
+  fr: 'fr_FR',
+  ja: 'ja_JP',
+};
+
+const currentLocale = localeMap[lang] || 'en_US';
+const alternateLocales = (Object.keys(languages) as SupportedLanguage[])
+  .filter((l) => l !== lang)
+  .map((l) => localeMap[l]);
+
+// Breadcrumb Item Generation
+const breadcrumbItems: any[] = [
+  {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": `${siteUrl}/`
+  }
+];
+
+if (lang !== defaultLang) {
+  breadcrumbItems.push({
+    "@type": "ListItem",
+    "position": 2,
+    "name": languages[lang]?.native || lang.toUpperCase(),
+    "item": canonicalUrl
+  });
+}
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Online Video Merger",
+    "url": canonicalUrl,
+    "description": pageDescription,
+    "image": ogImageUrl,
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires WebAssembly compatible browser (Chrome, Safari, Firefox, Edge, Opera)",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "MergeVideo.io",
+      "url": "https://mergevideo.github.io/"
+    },
+    "featureList": [
+      "100% Client-Side WebAssembly Video Processing",
+      "Zero File Uploads or Server Storage",
+      "Zero Watermarks and 100% Free",
+      "Direct MP4 Stream-Copy & Transcoding Fallback",
+      "Interactive Frame-Accurate Clip Trimming",
+      "Drag-and-Drop Sequence Reordering",
+      "Fast MP4 Export in Browser"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": t('howItWorks.title'),
+    "description": t('howItWorks.subtitle'),
+    "totalTime": "PT1M",
+    "supply": [
+      {
+        "@type": "HowToSupply",
+        "name": "Video Files (MP4, MOV, WebM, MKV)"
+      }
+    ],
+    "tool": [
+      {
+        "@type": "HowToTool",
+        "name": "Web Browser with WebAssembly support"
+      }
+    ],
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": t('howItWorks.step1Title'),
+        "text": t('howItWorks.step1Desc'),
+        "position": 1,
+        "url": `${canonicalUrl}#workspace`
+      },
+      {
+        "@type": "HowToStep",
+        "name": t('howItWorks.step2Title'),
+        "text": t('howItWorks.step2Desc'),
+        "position": 2,
+        "url": `${canonicalUrl}#workspace`
+      },
+      {
+        "@type": "HowToStep",
+        "name": t('howItWorks.step3Title'),
+        "text": t('howItWorks.step3Desc'),
+        "position": 3,
+        "url": `${canonicalUrl}#workspace`
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": t('faq.q1'),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t('faq.a1')
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t('faq.q2'),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t('faq.a2')
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t('faq.q3'),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t('faq.a3')
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t('faq.q4'),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t('faq.a4')
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t('faq.q5'),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t('faq.a5')
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t('faq.q6'),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t('faq.a6')
+        }
+      }
+    ]
+  }
+];
+---
+
+<!doctype html>
+<html lang={lang} dir={languages[lang]?.dir || 'ltr'} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Resource Preconnects for Optimal Web Performance -->
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+    <link rel="preconnect" href="https://unpkg.com" crossorigin />
+    <link rel="dns-prefetch" href="https://unpkg.com" />
+
+    <!-- Theme Color Meta -->
+    <meta name="theme-color" content="#3368A0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0c1520" media="(prefers-color-scheme: dark)" />
+
+    <!-- Anti-FOUC Dark Mode Pre-Render Script -->
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      })();
+    </script>
+
+    <!-- Comprehensive SEO Meta Tags -->
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="keywords" content={t('meta.keywords')} />
+    <meta name="author" content="MergeVideo.io" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Bidirectional hreflang Tags (7 Alternate Links) -->
+    {hreflangLinks.map((link) => (
+      <link rel="alternate" hreflang={link.lang} href={link.href} />
+    ))}
+
+    <!-- Open Graph (Facebook, LinkedIn, Discord, Slack) -->
+    <meta property="og:site_name" content="MergeVideo.io" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Free Online Video Merger Tool - Join MP4 Files Securely" />
+    <meta property="og:locale" content={currentLocale} />
+    {alternateLocales.map((altLoc) => (
+      <meta property="og:locale:alternate" content={altLoc} />
+    ))}
+
+    <!-- Twitter Card Meta -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content="Free Online Video Merger Tool - Join MP4 Files Securely" />
+
+    <!-- JSON-LD Structured Data Schemas -->
+    {jsonLd.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body class="bg-[#F2EFE7] text-[#192a3e] dark:bg-[#0c1520] dark:text-[#F2EFE7] min-h-screen flex flex-col antialiased selection:bg-[#3368A0] selection:text-white">
+    <slot />
+  </body>
+</html>

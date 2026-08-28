@@ -1,0 +1,49 @@
+---
+import { defaultLang, type SupportedLanguage } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+
+const faqKeys = [1, 2, 3, 4, 5, 6];
+---
+
+<section id="faq" class="py-16 sm:py-24 border-t border-[#C8DFDB]/80 dark:border-[#1e344b]/80">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+      <h2 class="text-2xl sm:text-4xl font-extrabold text-[#192a3e] dark:text-[#F2EFE7] tracking-tight">
+        {t('faq.title')}
+      </h2>
+      <p class="text-sm sm:text-base text-[#4a5d72] dark:text-[#adc5d8] mt-3">
+        {t('faq.subtitle')}
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {faqKeys.map((num) => {
+        const questionKey = `faq.q${num}` as const;
+        const answerKey = `faq.a${num}` as const;
+
+        return (
+          <details class="group glass-card rounded-2xl p-5 sm:p-6 transition-all duration-200 [&_summary::-webkit-details-marker]:hidden border border-[#C8DFDB]/80 dark:border-[#1e344b]/80 hover:border-[#66A3BF]/60">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-[#192a3e] dark:text-[#F2EFE7] text-base sm:text-lg select-none gap-4">
+              <span>{t(questionKey as any)}</span>
+              <span class="w-7 h-7 rounded-full bg-[#F2EFE7] dark:bg-[#1e344b] flex items-center justify-center flex-shrink-0 text-[#4a5d72] dark:text-[#adc5d8] group-open:rotate-180 group-open:bg-[#eaf2f7] group-open:text-[#3368A0] dark:group-open:bg-[#16273a] dark:group-open:text-[#66A3BF] transition-transform duration-200">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="mt-4 text-xs sm:text-sm text-[#4a5d72] dark:text-[#adc5d8] leading-relaxed pt-2 border-t border-[#C8DFDB]/40 dark:border-[#1e344b]/60">
+              {t(answerKey as any)}
+            </p>
+          </details>
+        );
+      })}
+    </div>
+  </div>
+</section>

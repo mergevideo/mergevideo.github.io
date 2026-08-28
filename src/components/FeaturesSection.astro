@@ -1,0 +1,77 @@
+---
+import { defaultLang, type SupportedLanguage } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+
+const features = [
+  {
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`,
+    titleKey: 'features.f1Title',
+    descKey: 'features.f1Desc',
+    color: 'text-[#3368A0] bg-[#eaf2f7] dark:text-[#66A3BF] dark:bg-[#16273a]'
+  },
+  {
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`,
+    titleKey: 'features.f2Title',
+    descKey: 'features.f2Desc',
+    color: 'text-[#66A3BF] bg-[#f0f6f9] dark:text-[#adc5d8] dark:bg-[#1e344b]'
+  },
+  {
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>`,
+    titleKey: 'features.f3Title',
+    descKey: 'features.f3Desc',
+    color: 'text-[#3368A0] bg-[#C8DFDB]/40 dark:text-[#C8DFDB] dark:bg-[#16273a]'
+  },
+  {
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>`,
+    titleKey: 'features.f4Title',
+    descKey: 'features.f4Desc',
+    color: 'text-[#66A3BF] bg-[#eaf2f7] dark:text-[#66A3BF] dark:bg-[#16273a]'
+  },
+  {
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="12" x2="2" y2="12"></line><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" y1="16" x2="6.01" y2="16"></line><line x1="10" y1="16" x2="10.01" y2="16"></line></svg>`,
+    titleKey: 'features.f5Title',
+    descKey: 'features.f5Desc',
+    color: 'text-[#3368A0] bg-[#f0f6f9] dark:text-[#C8DFDB] dark:bg-[#1e344b]'
+  },
+  {
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`,
+    titleKey: 'features.f6Title',
+    descKey: 'features.f6Desc',
+    color: 'text-[#66A3BF] bg-[#C8DFDB]/40 dark:text-[#66A3BF] dark:bg-[#16273a]'
+  },
+];
+---
+
+<section id="features" class="py-16 sm:py-24 border-t border-[#C8DFDB]/80 dark:border-[#1e344b]/80">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+      <h2 class="text-2xl sm:text-4xl font-extrabold text-[#192a3e] dark:text-[#F2EFE7] tracking-tight">
+        {t('features.title')}
+      </h2>
+      <p class="text-sm sm:text-base text-[#4a5d72] dark:text-[#adc5d8] mt-3">
+        {t('features.subtitle')}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {features.map((f) => (
+        <div class="glass-card rounded-2xl p-6 sm:p-7 hover:-translate-y-1 transition-all duration-200">
+          <div class={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 border border-[#C8DFDB]/60 dark:border-[#20364d] ${f.color}`} set:html={f.icon} />
+          <h3 class="text-lg font-bold text-[#192a3e] dark:text-[#F2EFE7] mb-2">
+            {t(f.titleKey as any)}
+          </h3>
+          <p class="text-xs sm:text-sm text-[#4a5d72] dark:text-[#adc5d8] leading-relaxed">
+            {t(f.descKey as any)}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

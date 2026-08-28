@@ -1,0 +1,100 @@
+---
+import { defaultLang, languages, type SupportedLanguage } from '../i18n/ui';
+import { useTranslations, getLocalizedPath } from '../i18n/utils';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const currentYear = new Date().getFullYear();
+const currentPath = Astro.url.pathname;
+---
+
+<footer class="mt-auto border-t border-[#C8DFDB]/80 dark:border-[#1e344b]/80 bg-[#F2EFE7]/80 dark:bg-[#0c1520]/80 py-12 transition-colors">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <!-- Column 1: Brand & Tagline -->
+      <div class="md:col-span-2 space-y-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-[#3368A0] flex items-center justify-center text-white shadow-md shadow-[#3368A0]/30">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <span class="font-black text-[#192a3e] dark:text-[#F2EFE7] tracking-tight text-lg">
+            MergeVideo<span class="text-[#3368A0] dark:text-[#66A3BF]">.io</span>
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#4a5d72] dark:text-[#adc5d8] max-w-sm leading-relaxed">
+          {t('footer.tagline')}
+        </p>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C8DFDB]/40 dark:bg-[#16273a] border border-[#C8DFDB] dark:border-[#20364d] text-[11px] font-semibold text-[#3368A0] dark:text-[#66A3BF]">
+          <span class="w-2 h-2 rounded-full bg-[#3368A0] dark:bg-[#66A3BF] animate-pulse"></span>
+          {t('footer.privacyBadge')}
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-[#192a3e] dark:text-[#F2EFE7] mb-3">
+          {t('footer.quickLinks')}
+        </h4>
+        <ul class="space-y-2 text-xs sm:text-sm text-[#4a5d72] dark:text-[#adc5d8]">
+          <li>
+            <a href="#features" class="hover:text-[#3368A0] dark:hover:text-[#66A3BF] transition-colors">
+              {t('nav.features')}
+            </a>
+          </li>
+          <li>
+            <a href="#how-it-works" class="hover:text-[#3368A0] dark:hover:text-[#66A3BF] transition-colors">
+              {t('nav.howItWorks')}
+            </a>
+          </li>
+          <li>
+            <a href="#faq" class="hover:text-[#3368A0] dark:hover:text-[#66A3BF] transition-colors">
+              {t('nav.faq')}
+            </a>
+          </li>
+          <li>
+            <a href="https://buymeacoffee.com/kisharadilz" target="_blank" rel="noopener noreferrer" class="hover:text-[#3368A0] dark:hover:text-[#66A3BF] transition-colors font-medium flex items-center gap-1.5">
+              <span>☕ {t('nav.support')}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Languages -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-[#192a3e] dark:text-[#F2EFE7] mb-3">
+          Languages
+        </h4>
+        <ul class="grid grid-cols-2 gap-2 text-xs text-[#4a5d72] dark:text-[#adc5d8]">
+          {(Object.keys(languages) as SupportedLanguage[]).map((langKey) => (
+            <li>
+              <a
+                href={getLocalizedPath(currentPath, langKey)}
+                class:list={[
+                  "hover:text-[#3368A0] dark:hover:text-[#66A3BF] transition-colors",
+                  langKey === lang && "font-bold text-[#3368A0] dark:text-[#66A3BF]"
+                ]}
+                hreflang={langKey}
+              >
+                {languages[langKey].native}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pt-8 border-t border-[#C8DFDB]/60 dark:border-[#1e344b]/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#66A3BF] dark:text-[#adc5d8]">
+      <p>© {currentYear} mergevideo.github.io • {t('footer.allRights')}</p>
+      <a href="https://buymeacoffee.com/kisharadilz" target="_blank" rel="noopener noreferrer" class="hover:underline">
+        Made with ❤️ for privacy
+      </a>
+    </div>
+  </div>
+</footer>

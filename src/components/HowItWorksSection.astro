@@ -1,0 +1,66 @@
+---
+import { defaultLang, type SupportedLanguage } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+
+const steps = [
+  {
+    num: '01',
+    titleKey: 'howItWorks.step1Title',
+    descKey: 'howItWorks.step1Desc',
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>`
+  },
+  {
+    num: '02',
+    titleKey: 'howItWorks.step2Title',
+    descKey: 'howItWorks.step2Desc',
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>`
+  },
+  {
+    num: '03',
+    titleKey: 'howItWorks.step3Title',
+    descKey: 'howItWorks.step3Desc',
+    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`
+  },
+];
+---
+
+<section id="how-it-works" class="py-16 sm:py-24 bg-[#e8e4d8]/40 dark:bg-[#0c1520]/50 border-t border-[#C8DFDB]/80 dark:border-[#1e344b]/80">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+      <h2 class="text-2xl sm:text-4xl font-extrabold text-[#192a3e] dark:text-[#F2EFE7] tracking-tight">
+        {t('howItWorks.title')}
+      </h2>
+      <p class="text-sm sm:text-base text-[#4a5d72] dark:text-[#adc5d8] mt-3">
+        {t('howItWorks.subtitle')}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      {steps.map((step) => (
+        <div class="glass-card rounded-2xl p-7 relative flex flex-col items-start hover:-translate-y-1 transition-transform duration-200">
+          <div class="w-full flex items-center justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-[#eaf2f7] dark:bg-[#16273a] text-[#3368A0] dark:text-[#66A3BF] flex items-center justify-center border border-[#C8DFDB]/60 dark:border-[#20364d]" set:html={step.icon} />
+            <span class="text-3xl font-black text-[#C8DFDB] dark:text-[#1e344b]">
+              {step.num}
+            </span>
+          </div>
+
+          <h3 class="text-lg font-bold text-[#192a3e] dark:text-[#F2EFE7] mb-2">
+            {t(step.titleKey as any)}
+          </h3>
+
+          <p class="text-xs sm:text-sm text-[#4a5d72] dark:text-[#adc5d8] leading-relaxed">
+            {t(step.descKey as any)}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
