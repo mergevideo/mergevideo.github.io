@@ -199,10 +199,23 @@ const jsonLd = [
     <meta name="generator" content={Astro.generator} />
 
     <!-- Resource Preconnects for Optimal Web Performance -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
     <link rel="dns-prefetch" href="https://res.cloudinary.com" />
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
     <link rel="dns-prefetch" href="https://unpkg.com" />
+
+    <!-- Google Analytics 4 (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-MX05D03DSE"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-MX05D03DSE');
+    </script>
 
     <!-- Theme Color Meta -->
     <meta name="theme-color" content="#3368A0" media="(prefers-color-scheme: light)" />
