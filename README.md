@@ -58,7 +58,7 @@ mergevideo.github.io/
 │   │   ├── FaqSection.astro           # Native accessible FAQ accordion
 │   │   ├── FeaturesSection.astro      # Feature highlight grid
 │   │   ├── Footer.astro               # Footer navigation & language selector
-│   │   ├── Header.astro               # Sticky navigation with BuyMeACoffee & theme toggle
+│   │   ├── Header.astro               # Sticky navigation with Ko-fi & theme toggle
 │   │   ├── HowItWorksSection.astro    # Step-by-step visual walkthrough
 │   │   ├── LanguagePicker.astro       # SEO-crawlable language switch dropdown
 │   │   ├── ThemeToggle.jsx            # Dark / Light mode toggle island
@@ -139,7 +139,7 @@ The repository includes a standalone automated CI/CD workflow in [`.github/workf
 
 If you find this tool helpful, consider supporting the developer:
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/kisharadilz)
+[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/kishara)
 
 ---
 
